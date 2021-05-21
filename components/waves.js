@@ -33,7 +33,9 @@ const waves = () => {
   const createCamera = () => {
     const { width, height } = container.current.getBoundingClientRect()
     camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 100)
+    camera.position.x = 1
     camera.position.z = 1
+    camera.lookAt(0, 0, 0)
   }
 
   const createScene = () => {
