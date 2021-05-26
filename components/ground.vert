@@ -1,4 +1,5 @@
 uniform float uTime;
+uniform float uSize;
 
 varying vec3 vPos;
 
@@ -13,7 +14,7 @@ void main() {
 
   vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
 
-  gl_PointSize = 2.5 - (1.0 / - mvPosition.z);
+  gl_PointSize = uSize - (1.0 / - mvPosition.z);
   gl_Position = projectionMatrix * mvPosition;
 
   vPos = pos;
