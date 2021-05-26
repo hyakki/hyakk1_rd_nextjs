@@ -13,9 +13,12 @@ import styles from './waves.module.scss'
 
 import { useAnimationFrame } from './utils'
 
+import dat from 'dat.gui'
+
 const waves = () => {
   // Refs
   const container = useRef(null)
+  const gui = useRef(null)
   const settings = useRef({
     scene: null,
     camera: null,
@@ -63,9 +66,47 @@ const waves = () => {
       height,
     })
 
+    // Inital
+    const initial = {
+      unrealBloomPass: {
+        strength: 0,
+        radius: 0,
+        threshold: 0,
+      },
+      uniforms: {
+        uSize: 2.5,
+      },
+    }
+
+    // Dat.GUI
+    gui.current = new dat.GUI({ name: 'My GUI'} )
+
+    const unrealBloomPassFolder = gui.current.addFolder('UnrealBloomPass')
+
+    unrealBloomPassFolder.add(initial.unrealBloomPass, 'strength', 0, 3, 0.1).onChange(v => {
+      settings.current.composer.passes[1].strength = v
+    })
+    unrealBloomPassFolder.add(initial.unrealBloomPass, 'radius', 0, 3, 0.1).onChange(v => {
+      settings.current.composer.passes[1].radius = v
+    })
+    unrealBloomPassFolder.add(initial.unrealBloomPass, 'threshold', 0, 3, 0.1).onChange(v => {
+      settings.current.composer.passes[1].radius = v
+    })
+
+    unrealBloomPassFolder.open()
+
+    const uniformsFolder = gui.current.addFolder('uniforms')
+
+    uniformsFolder.add(initial.uniforms, 'uSize', 1, 10, 0.1).onChange(v => {
+      settings.current.material.uniforms.uSize.value = v
+    })
+
+    uniformsFolder.open()
+
     // Create Scene
     settings.current.scene = new THREE.Scene()
-    settings.current.scene.background = new THREE.Color(0x20162c)
+    // settings.current.scene.background = new THREE.Color(0x20162c)
+    settings.current.scene.background = new THREE.Color(0x000000)
 
     // Create Camera
     settings.current.camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 100)
@@ -80,7 +121,7 @@ const waves = () => {
       vertexShader: require('./ground.vert').default,
       uniforms: {
         uTime: { value: 0.0 },
-        uSize: { value: 2.5 },
+        uSize: { value: initial.uniforms.uSize },
       },
       transparent: true,
     })
@@ -100,9 +141,9 @@ const waves = () => {
 
     const bloomPass = new UnrealBloomPass(
       new THREE.Vector2(width, height),
-      1, // strength
-      0.3, // radius
-      0.3, // threshold
+      initial.unrealBloomPass.strength,
+      initial.unrealBloomPass.radius,
+      initial.unrealBloomPass.threshold,
     )
 
     settings.current.composer = new EffectComposer(settings.current.renderer)
@@ -123,7 +164,7 @@ const waves = () => {
   }
 
   const destroy = () => {
-    console.log('destroy')
+    gui.current && gui.current.destroy()
   }
 
   const createOrbitControls = () => {

@@ -10,6 +10,8 @@ void main() {
   float sms2 = smoothstep(1.0, 2.0, dist);
   float sms3 = smoothstep(1.0, 3.0, dist);
 
+  // color.a = 1.0;
+
   color.a = (1.0 - sms) * 0.25;
   color.r = 1.0 - sms2 + sms3;
   color.r = 1.0 - sms3;
