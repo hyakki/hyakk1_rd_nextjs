@@ -14,6 +14,7 @@ import styles from './waves.module.scss'
 import { useAnimationFrame } from './utils'
 
 import dat from 'dat.gui'
+import convert from 'color-convert'
 
 const waves = () => {
   // Refs
@@ -36,7 +37,7 @@ const waves = () => {
   // Init and destroy
   useEffect(() => {
     init()
-    createOrbitControls()
+    // createOrbitControls()
 
     return () => {
       destroy()
@@ -75,6 +76,11 @@ const waves = () => {
       },
       uniforms: {
         uSize: 2.5,
+        uLimit: 4.0,
+        uDepth: 4.0,
+        uColor1: '#0038ff',
+        uColor2: '#d30df4',
+        uMove: true,
       },
     }
 
@@ -82,7 +88,9 @@ const waves = () => {
     gui.current = new dat.GUI({ name: 'My GUI'} )
 
     const unrealBloomPassFolder = gui.current.addFolder('UnrealBloomPass')
+    const uniformsFolder = gui.current.addFolder('uniforms')
 
+    // Dat.GUI unrealBloomPass
     unrealBloomPassFolder.add(initial.unrealBloomPass, 'strength', 0, 3, 0.1).onChange(v => {
       settings.current.composer.passes[1].strength = v
     })
@@ -93,15 +101,40 @@ const waves = () => {
       settings.current.composer.passes[1].radius = v
     })
 
-    unrealBloomPassFolder.open()
-
-    const uniformsFolder = gui.current.addFolder('uniforms')
-
+    // Dat.GUI uniforms
     uniformsFolder.add(initial.uniforms, 'uSize', 1, 10, 0.1).onChange(v => {
       settings.current.material.uniforms.uSize.value = v
     })
 
+    uniformsFolder.add(initial.uniforms, 'uMove', 1, 10, 0.1).onChange(v => {
+      settings.current.material.uniforms.uMove.value = v ? 1.0 : 0.0
+    })
+
+    uniformsFolder.add(initial.uniforms, 'uDepth', 0, 4, 0.1).onChange(v => {
+      settings.current.material.uniforms.uDepth.value = v
+    })
+
+    uniformsFolder.add(initial.uniforms, 'uLimit', 1, 5, 0.1).onChange(v => {
+      settings.current.material.uniforms.uLimit.value = v
+    })
+
+    uniformsFolder.addColor(initial.uniforms, 'uColor1').onChange(v => {
+      const rgb = convert.hex.rgb(v).map(c => c / 256)
+
+      settings.current.material.uniforms.uColor1.value = rgb
+    })
+
+    uniformsFolder.addColor(initial.uniforms, 'uColor2').onChange(v => {
+      const rgb = convert.hex.rgb(v).map(c => c / 256)
+
+      settings.current.material.uniforms.uColor2.value = rgb
+    })
+
+    // Dat.GUI Open folders
+    unrealBloomPassFolder.open()
     uniformsFolder.open()
+
+    // Dat.GUI [end]
 
     // Create Scene
     settings.current.scene = new THREE.Scene()
@@ -110,8 +143,9 @@ const waves = () => {
 
     // Create Camera
     settings.current.camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 100)
-    settings.current.camera.position.x = 1
-    settings.current.camera.position.z = 1
+    settings.current.camera.position.x = 0
+    settings.current.camera.position.y = 0
+    settings.current.camera.position.z = 3
     settings.current.camera.lookAt(0, 0, 0)
 
     // Create ground
@@ -122,6 +156,11 @@ const waves = () => {
       uniforms: {
         uTime: { value: 0.0 },
         uSize: { value: initial.uniforms.uSize },
+        uMove: { value: initial.uniforms.uMove ? 1.0 : 0.0 },
+        uColor1: { value: convert.hex.rgb(initial.uniforms.uColor1).map(c => c / 256)},
+        uColor2: { value: convert.hex.rgb(initial.uniforms.uColor2).map(c => c / 256)},
+        uDepth: { value: initial.uniforms.uDepth },
+        uLimit: { value: initial.uniforms.uLimit },
       },
       transparent: true,
     })
