@@ -82,6 +82,9 @@ const waves = () => {
         uColor2: '#d30df4',
         uMove: true,
       },
+      scene: {
+        backgroundColor: '#0c0735',
+      },
     }
 
     // Dat.GUI
@@ -89,6 +92,7 @@ const waves = () => {
 
     const unrealBloomPassFolder = gui.current.addFolder('UnrealBloomPass')
     const uniformsFolder = gui.current.addFolder('uniforms')
+    const sceneFolder = gui.current.addFolder('scene')
 
     // Dat.GUI unrealBloomPass
     unrealBloomPassFolder.add(initial.unrealBloomPass, 'strength', 0, 3, 0.1).onChange(v => {
@@ -130,16 +134,22 @@ const waves = () => {
       settings.current.material.uniforms.uColor2.value = rgb
     })
 
+    // Dat.GUI scene
+    sceneFolder.addColor(initial.scene, 'backgroundColor').onChange(v => {
+      settings.current.scene.background = new THREE.Color(v)
+    })
+
     // Dat.GUI Open folders
     unrealBloomPassFolder.open()
     uniformsFolder.open()
+    sceneFolder.open()
 
     // Dat.GUI [end]
 
     // Create Scene
     settings.current.scene = new THREE.Scene()
     // settings.current.scene.background = new THREE.Color(0x20162c)
-    settings.current.scene.background = new THREE.Color(0x000000)
+    settings.current.scene.background = new THREE.Color(initial.scene.backgroundColor)
 
     // Create Camera
     settings.current.camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 100)
@@ -190,8 +200,6 @@ const waves = () => {
     settings.current.composer.addPass(bloomPass)
 
     container.current.appendChild(settings.current.renderer.domElement)
-
-    settings.current.composer.render(settings.current.scene, settings.current.camera)
   }
  
   const update = () => {
