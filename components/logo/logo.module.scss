@@ -1,0 +1,19 @@
+@import './../../styles/utils/_utils.scss';
+@import './../../styles/vendor/sass-mq/mq';
+
+.logo {
+  width: 100%;
+}
+
+.bg {
+  fill: $white;
+}
+
+.letters {
+  fill: $white;
+}
+
+.stroke {
+  stroke: $white;
+  fill: transparent;
+}

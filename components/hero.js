@@ -1,6 +1,6 @@
 import styles from './hero.module.scss'
 
-import Logo from './logo'
+import Logo from './logo/logo'
 import Mouse from './mouse'
 
 const hero = () => {

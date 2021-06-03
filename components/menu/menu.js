@@ -18,8 +18,6 @@ const menu = () => {
 
   let tl
 
-  console.log(rContent.current, rTrigger.current, rOverlay.current, rBg.current, rList.current)
-
   const createTimeline = () => {
     tl = gsap.timeline({ paused: true })
 
