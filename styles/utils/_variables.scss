@@ -1,0 +1,186 @@
+/**
+ * Dev, based on $env (from gulp)
+ */
+$env: 'dev' !default;
+
+
+/**
+ * Colors
+ * for the naming use http://name-of-color.com/
+ * from darker to lighter ?
+ */
+
+// Global colors
+$black: rgb(0, 0, 0);
+$gray-darkest: rgb(32, 32, 32);
+$gray-darker: rgb(65, 65, 65);
+$gray-dark: rgb(96, 96, 96);
+$gray-medium: rgb(128, 128, 128);
+$gray-light: #4d4d4d;
+$gray-lighter: #979797;
+$gray-lightest: rgb(247, 247, 247);
+$white: rgb(255, 255, 255);
+$transparent: transparent;
+
+// Dev colors
+$c-dev-bg: #3e4b55;
+$c-dev-error: #d90b0b;
+$c-dev-warning: #f50;
+$c-dev-info: #829deb;
+
+// Semantic/project colors
+$c-dark: rgb(31, 31, 31);
+$c-dark-lighter: rgb(48, 48, 48);
+$c-light: $white;
+$c-yellow: rgb(254, 206, 0);
+$c-orange: rgb(247, 171, 0);
+$c-gradient-orange-yellow: radial-gradient(circle, $c-yellow 0%, $c-orange 200%);
+$c-gradient-green: rgb(33, 230, 193);
+$c-gradient-blue: rgb(0, 103, 255);
+$c-gradient-orange-blue: radial-gradient(circle, $c-gradient-blue 0%, $c-orange 200%);
+$c-gradient-green-blue: linear-gradient(90deg, $c-gradient-green 0%, $c-gradient-blue 300%);
+$c-separator: rgb(230, 230, 230);
+
+// Universe colors
+$c-universe-education: #43a431;
+$c-universe-homepage: #fecb16;
+$c-universe-event: #6e6cc5;
+$c-universe-publication: #7d3d8b;
+$c-universe-contact: #f30000;
+
+
+// Z Layers
+$z-layers: (
+  lowest: 0,
+  lower: 10,
+  low: 20,
+  high: 30,
+  higher: 40,
+  highest: 50,
+  infinite: 999,
+);
+
+/**
+ * Typography
+ */
+
+$base-font-size: 18px !default;
+
+$ff-default: 'Nunito Sans', sans-serif;
+$ff-alt: sans-serif;
+
+$font-sizes: (
+  h1: 3.6rem,
+  h2: 2.8rem,
+  h3: 2.4rem,
+  h4: 1.4rem
+);
+
+// The `scalable-text-map` contains options for our `scalable-text` mixin.
+// For each entry, we define a `min` map and a `max` map.
+// In this example this means:
+// - For a screen < 400px, the `h1` will be 24px.
+// - For a screen > 800px, the `h1` will be 36px.
+// - For any screen size in between, the `h1` will scale between 24px and 36px.
+$scalable-text-map: (
+  h1: (
+    min: (24px, 'small'),
+    max: (36px, 'large')
+  ),
+  p: (
+    min: (13px, 'small'),
+    max: (18px, 'large')
+  )
+);
+
+
+$spacing: 2rem;
+
+
+
+/*
+ * Pastry spacing & layout
+ */
+
+$pastry-spacing-h: $spacing * 1.5;
+$pastry-spacing-w: $spacing * 3;
+$pastry-width: 85rem;
+
+
+/*
+ * Header spacing
+ */
+
+$header-spacing-h: $spacing * 3;
+$header-spacing-w: $spacing * 2.5;
+
+/*
+* Nav spacing
+*/
+
+$nav-spacing-h: $spacing * 5;
+$nav-spacing-w: $spacing * 7.5;
+
+
+/*
+ * Hero spacing
+ */
+
+$hero-spacing: $spacing * 9;
+
+
+/*
+ * Wysiwyg spacing
+ */
+
+$wysiwyg-spacing-h: $spacing * 8;
+$wysiwyg-spacing-w: $spacing * 13;
+
+/*
+ * Listing spacing
+ */
+
+$listing-spacing-h: $spacing * 5;
+$listing-spacing-w: $spacing * 3;
+
+/*
+ * Button spacing
+ */
+
+$button-spacing-h: $spacing;
+$button-spacing-w: $spacing * 2.25;
+
+/*
+ * Event-sidebar spacing
+ */
+
+$sidebar-spacing: $spacing * 2.5;
+
+/*
+* Layout & spacing
+*/
+
+$spacing-xxs: $spacing;
+$spacing-xs: $spacing * 2;
+$spacing-s: $spacing * 2.5;
+$spacing-m: $spacing * 4;
+$spacing-l: $spacing * 5;
+$spacing-xl: $spacing * 7.5;
+$spacing-xxl: $spacing * 10;
+
+$wrapper-spacing-h: $spacing * 5;
+$wrapper-spacing-w: $spacing * 3;
+$wrapper-width: 144rem;
+
+/*
+ * footer spacing
+ */
+
+$footer-spacing-h: $spacing;
+$footer-spacing-w: $spacing * 3;
+
+/**
+* RWD
+*/
+$mq-responsive: true;
+$mq-static-breakpoint: 'large';

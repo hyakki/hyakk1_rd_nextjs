@@ -1,0 +1,28 @@
+@import './../styles/utils/_utils.scss';
+@import './../styles/vendor/sass-mq/mq';
+
+.hero {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.logo {
+  width: 400px;
+  max-width: 75vw;
+
+  @include mq(m) {
+    width: 400px;
+  }
+}
+
+.scroll {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+}

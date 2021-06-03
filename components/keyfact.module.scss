@@ -1,0 +1,57 @@
+@import './../styles/utils/_utils.scss';
+@import './../styles/vendor/sass-mq/mq';
+
+.keyfact {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.inner {
+  @include owl;
+
+  max-width: 600px;
+}
+
+.title {
+  text-transform: lowercase;
+  font-weight: 200;
+  margin-bottom: 0;
+  font-size: 4rem;
+  line-height: 1em;
+
+  @include mq(m) {
+    font-size: 6rem;
+  }
+
+  @include mq(l) {
+    font-size: 10rem;
+  }
+
+  > div {
+    position: relative;
+    overflow: hidden;
+  }
+
+  span {
+    display: block;
+
+    strong {
+      font-weight: 700;
+    }
+  }
+}
+
+.text {
+  margin-top: $spacing;
+  font-size: 1.3rem;
+
+  @include mq(m) {
+    @include owl;
+    column-count: 2;
+    font-size: 1.6rem;
+  }
+}

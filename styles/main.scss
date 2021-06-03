@@ -1,0 +1,22 @@
+@charset 'UTF-8';
+
+@import 'utils/utils';
+@import 'utils/helpers';
+
+@import 'vendor/sass-mq/mq';
+@import 'vendor/normalize';
+
+@import 'base/global';
+@import 'base/reset';
+@import 'base/typography';
+
+@import 'dev';
+@import 'shame';
+
+.swiper-container {
+  height: 100vh;
+}
+
+.swiper-slide {
+  height: 100vh;
+}

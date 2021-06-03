@@ -1,0 +1,50 @@
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;600;800&display=swap');
+
+html {
+  font-size: calc(1em * .625);
+}
+
+body {
+  /* sass-lint:disable-block no-vendor-prefixes */
+  font: 1.4rem / 1.5 $ff-default;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+// h1,
+// .h1 {
+//   font-family: $ff-alt;
+//   font-size: 4rem;
+//   line-height: 1.1;
+
+//   @include mq('m') {
+//     font-size: 8rem;
+//   }
+// }
+
+// h2,
+// .h2 {
+//   margin: 0;
+//   font-family: $ff-alt;
+//   font-size: 3rem;
+//   font-weight: normal;
+//   line-height: 1;
+
+//   @include mq('m') {
+//     font-size: 4rem;
+//   }
+
+//   @include mq('l') {
+//     font-size: 5rem;
+//   }
+// }
+
+// h3,
+// .h3 {
+//   margin: 0;
+//   margin-bottom: 1rem;
+//   font-family: $ff-alt;
+//   font-size: 2.4rem;
+//   font-weight: normal;
+// }

@@ -9,7 +9,7 @@ module.exports = {
 	webpack: config => {
 		config.module.rules.push(
 			{
-				test: /\.(vert|frag)$/i,
+				test: /\.(vert|frag|glsl)$/i,
 				use: 'raw-loader',
 			}
 		)

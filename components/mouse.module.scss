@@ -1,0 +1,53 @@
+@import './../styles/utils/_utils.scss';
+@import './../styles/vendor/sass-mq/mq';
+
+.mouse {
+  fill: transparent;
+  stroke: $white;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1px;
+}
+
+@keyframes mouseThree {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+@keyframes mouseTwo {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(3px);
+  }
+}
+
+@keyframes mouseOne {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
+}
+
+.one { animation-name: mouseOne; }
+.two { animation-name: mouseTwo; }
+.three {animation-name: mouseThree; }
+
+.one,
+.two,
+.three {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}

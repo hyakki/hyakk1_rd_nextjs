@@ -1,0 +1,54 @@
+@use 'sass:math';
+
+body {
+  color: $white;
+}
+
+.dg.ac {
+  position: fixed;
+  z-index: 99 !important;
+}
+
+.swiper-pagination {
+  @include center-y;
+
+  z-index: 9;
+  display: flex;
+  flex-direction: column;
+  right: $spacing;
+}
+
+.swiper-pagination-bullet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid $white;
+  cursor: pointer;
+
+  & + & {
+    margin-top: math.div($spacing, 2);
+  }
+
+  &[class*='-active'] {
+    border-color: red;
+  }
+}
+
+.h-wrapper {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+
+  @include mq(xl) {
+    width: 100%;
+    max-width: 1024px;
+  }
+}
+
+.swiper-pagination {
+  @include mq($until: m) {
+    display: none;
+  }
+}
