@@ -38,7 +38,7 @@ const keyfact = (props) => {
         delay: 0.6,
         duration: 0.7,
         opacity: 1,
-        xPercent: 20,
+        // xPercent: 20,
         ease: 'power4.out',
       })
     } else {

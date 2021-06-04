@@ -24,6 +24,10 @@ void main() {
 		elevation -= abs(cnoise(vec3(modelPosition.xz * uSmallWavesFrequency * i, uTime * uSmallWavesSpeed)) * uSmallWavesElevation / i);
 	}
 
+  // float d = distance(vec3(0.0, 0.0, 0.0), vec3(position.x, position.y, position.z)); 
+
+  // elevation -= (0.0 - smoothstep(0.0, 4.0, d));
+
   modelPosition.y += elevation;
 
   vec4 viewPosition = viewMatrix * modelPosition;
@@ -32,7 +36,8 @@ void main() {
   vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
 
   gl_Position = projectionPosition;
-  gl_PointSize = (uSize * devicePixelRatio) - ( 1.0 - mvPosition.x );
+  gl_PointSize = (uSize * devicePixelRatio) - ( distance(vec2(0.0, 0.0), mvPosition.xz) );
+  // gl_PointSize = (uSize * devicePixelRatio);
 
   vElevation = elevation;
 }

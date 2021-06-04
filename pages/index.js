@@ -15,6 +15,7 @@ import SwipeContext from './../contexts/SwipeContext'
 import SwipperContext from './../contexts/SwipperContext'
 import contents from './../components/contents'
 import Header from './../components/header/header'
+import Mouse from './../components/mouse'
 
 const Waves = dynamic(
   () => import('./../components/waves'),
@@ -40,8 +41,11 @@ export default function Home() {
 
           <Header />
 
+          <Mouse />
+
           <main>
             <Sea />
+
 
             <Swiper direction={'vertical'}
                     slidesPerView={1}

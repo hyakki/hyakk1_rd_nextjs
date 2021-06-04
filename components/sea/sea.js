@@ -11,9 +11,14 @@ import dat from 'dat.gui'
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import { useAnimationFrame } from './../utils'
 
+import gsap from 'gsap'
+
 import styles from './sea.module.scss'
 
+import SwipeContext from './../../contexts/SwipeContext'
+
 const sea = () => {
+
   // Refs
   const container = useRef(null)
   const gui = useRef(null)
@@ -30,7 +35,88 @@ const sea = () => {
   const debugObject = useRef({
     depthColor: '#186691',
     surfaceColor: '#9bd8ff',
+    backgroundColor: '#071547',
   })
+
+  // TODO
+  const [swipe] = useContext(SwipeContext)
+  const [active, setActive] = useState(false)
+
+  useEffect(() => {
+    if (swipe === 0) {
+      setActive(true)
+
+      if (!settings.current.camera || !settings.current.material) return
+
+      gsap.to(settings.current.camera.position, {
+        duration: 1.2,
+        x: 0.82,
+        y: 0.85,
+        z: 1.16,
+        onUpdate: () => {
+          camera.lookAt(0, 0, 0)
+        },
+        ease: 'power4.out',
+      })
+
+      if (settings.current.material) {
+        gsap.to(settings.current.material.uniforms.uSmallWavesElevation, {
+          duration: 1.2,
+          value: 0.15,
+          ease: 'power4.out',
+          onUpdate: () => {
+            gui.current.updateDisplay()
+          },
+        })
+
+        gsap.to(settings.current.material.uniforms.uBigWavesElevation, {
+          duration: 1.2,
+          value: 0.3,
+          ease: 'power4.out',
+          onUpdate: () => {
+            gui.current.updateDisplay()
+          },
+        })
+      }
+    }
+
+    if (swipe !== 0 && active) {
+      setActive(false)
+
+      if (!settings.current.camera) return
+
+      gsap.to(settings.current.camera.position, {
+        duration: 1.2,
+        x: 0.1,
+        y: 1.2,
+        z: 0.1,
+        onUpdate: () => {
+          camera.lookAt(0, 0, 0)
+        },
+        ease: 'power4.out',
+      })
+
+      if (!settings.current.material) return
+
+      gsap.to(settings.current.material.uniforms.uSmallWavesElevation, {
+        duration: 1.2,
+        value: 0.28,
+        ease: 'power4.out',
+        onUpdate: () => {
+          gui.current.updateDisplay()
+        },
+      })
+
+      gsap.to(settings.current.material.uniforms.uBigWavesElevation, {
+        duration: 1.2,
+        value: 0,
+        ease: 'power4.out',
+        onUpdate: () => {
+          gui.current.updateDisplay()
+        },
+      })
+    }
+  }, [swipe])
 
   // States
   const [time, setTime] = useState(0)
@@ -48,18 +134,46 @@ const sea = () => {
     })
   }
 
+  let onMousedown = () => {
+    gsap.killTweensOf(settings.current.material.uniforms.uBigWavesElevation)
+
+    gsap.to(settings.current.material.uniforms.uBigWavesElevation, {
+      value: 0.6,
+      onUpdate: () => {
+        gui.current.updateDisplay()
+      },
+    })
+  }
+
+  let onMouseup = () => {
+    gsap.killTweensOf(settings.current.material.uniforms.uBigWavesElevation)
+
+    gsap.to(settings.current.material.uniforms.uBigWavesElevation, {
+      value: 0.3,
+      onUpdate: () => {
+        gui.current.updateDisplay()
+      },
+    })
+  }
+
   onResize = onResize.bind(this)
+  onMousedown = onMousedown.bind(this)
+  onMouseup = onMouseup.bind(this)
 
   // Init and destroy
   useEffect(() => {
     init()
 
     window.addEventListener('resize', onResize)
+    // window.addEventListener('mousedown', onMousedown)
+    // window.addEventListener('mouseup', onMouseup)
 
     return () => {
       destroy()
 
       window.removeEventListener('resize', onResize)
+      // window.removeEventListener('mousedown', onMousedown)
+      // window.removeEventListener('mouseup', onMouseup)
     }
   }, [])
 
@@ -82,15 +196,15 @@ const sea = () => {
   // Create methods
   const createScene = () => {
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0x000000)
+    scene.background = new THREE.Color(debugObject.current.backgroundColor)
     return scene
   }
 
   const createCamera = (width, height) => {
     const camera = new THREE.PerspectiveCamera(75, width / height, 0.01, 100)
-    camera.position.x = 1
-    camera.position.y = 1
-    camera.position.z = 1
+    camera.position.x = 0.82
+    camera.position.y = 0.85
+    camera.position.z = 1.16
 
     camera.lookAt(0, 0, 0)
 
@@ -112,19 +226,19 @@ const sea = () => {
       vertexShader,
       fragmentShader,
       uniforms: {
-        uBigWavesElevation: { value: 0.2 },
-        uBigWavesFrequency: { value: new THREE.Vector2(4, 1.5) },
+        uBigWavesElevation: { value: 0.3 },
+        uBigWavesFrequency: { value: new THREE.Vector2(0.8, 1.5) },
         uBigWavesSpeed: { value: 0.75 },
         uTime: { value: 0 },
         uDepthColor: { value: new THREE.Color(debugObject.current.depthColor) },
         uSurfaceColor: { value: new THREE.Color(debugObject.current.surfaceColor) },
-        uColorOffset: { value: 0.08 },
-        uColorMultiplier: { value: 5.0 },
+        uColorOffset: { value: 0.35 },
+        uColorMultiplier: { value: 0.0 },
 				uSmallWavesElevation: { value: 0.15 },
-				uSmallWavesFrequency: { value: 3 },
+				uSmallWavesFrequency: { value: 1.9 },
 				uSmallWavesSpeed: { value: 0.2 },
 				uSmallWavesIterations: { value: 4 },
-				uSize: { value: 1.0 },
+				uSize: { value: 3.0 },
       },
       side: THREE.DoubleSide,
 			transparent: true,
@@ -170,6 +284,8 @@ const sea = () => {
 
     settings.current.renderer.render(settings.current.scene, settings.current.camera)
 
+    window['camera'] = settings.current.camera
+
     container.current.appendChild(settings.current.renderer.domElement)
 
     if (document?.location?.hash === '#debug') {
@@ -209,6 +325,12 @@ const sea = () => {
         .name('surfaceColor')
         .onChange(() => {
           settings.current.material.uniforms.uSurfaceColor.value.set(debugObject.current.surfaceColor)
+        })
+
+      gui.current.addColor(debugObject.current, 'backgroundColor')
+        .name('backgroundColor')
+        .onChange(() => {
+          settings.current.scene.background = new THREE.Color(debugObject.current.backgroundColor)
         })
 
       gui.current.add(settings.current.material.uniforms.uColorOffset, 'value')
