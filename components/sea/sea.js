@@ -65,7 +65,7 @@ const sea = () => {
           value: 0.15,
           ease: 'power4.out',
           onUpdate: () => {
-            gui.current.updateDisplay()
+            gui.current && gui.current.updateDisplay()
           },
         })
 
@@ -74,7 +74,7 @@ const sea = () => {
           value: 0.3,
           ease: 'power4.out',
           onUpdate: () => {
-            gui.current.updateDisplay()
+            gui.current && gui.current.updateDisplay()
           },
         })
       }
@@ -103,7 +103,7 @@ const sea = () => {
         value: 0.28,
         ease: 'power4.out',
         onUpdate: () => {
-          gui.current.updateDisplay()
+          gui.current && gui.current.updateDisplay()
         },
       })
 
@@ -112,7 +112,7 @@ const sea = () => {
         value: 0,
         ease: 'power4.out',
         onUpdate: () => {
-          gui.current.updateDisplay()
+          gui.current && gui.current.updateDisplay()
         },
       })
     }
@@ -140,7 +140,7 @@ const sea = () => {
     gsap.to(settings.current.material.uniforms.uBigWavesElevation, {
       value: 0.6,
       onUpdate: () => {
-        gui.current.updateDisplay()
+        gui.current && gui.current.updateDisplay()
       },
     })
   }
@@ -151,7 +151,7 @@ const sea = () => {
     gsap.to(settings.current.material.uniforms.uBigWavesElevation, {
       value: 0.3,
       onUpdate: () => {
-        gui.current.updateDisplay()
+        gui.current && gui.current.updateDisplay()
       },
     })
   }
